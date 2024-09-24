@@ -8,4 +8,4 @@ catalog = [
 ]
 
 for smartphone in catalog:
-    print(smartphone.marka)
+    smartphone.info()

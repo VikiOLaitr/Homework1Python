@@ -4,5 +4,5 @@ class Smartphone:
         self.model = model
         self.number = number
 
-    def __str__(self):
-        return f"{self.marka} - {self.model}. {self.number}."
+    def info(self):
+        print(f"{self.marka} - {self.model}. {self.number}.")
