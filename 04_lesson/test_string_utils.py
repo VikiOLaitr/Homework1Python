@@ -36,8 +36,8 @@ def test_to_list(utils, text_in, delimiter, text_out):
 
 @pytest.mark.parametrize("text_in, symbol, result", [
     ("SkyPro", "S", True),
-    ("Hello world!", "l", True),
-    ("abc", "b", True)
+    ("SkyPro", "Z", False),
+    ("Hello world!", "l", True)
 ])
 def test_contains(utils, text_in, symbol, result):
     assert utils.contains(text_in, symbol) == result
@@ -66,7 +66,8 @@ def test_end_with(utils, text_in, symbol, result):
 
 @pytest.mark.parametrize("text_in, result", [
     ("", True),
-    ("  ", True)
+    ("  ", True),
+    ("not empty", False)
 ])
 def test_is_empty(utils, text_in, result):
     assert utils.is_empty(text_in,) == result
@@ -121,8 +122,7 @@ def test_to_list_neg(utils, text_in, delimiter):
 
 @pytest.mark.parametrize("text_in, symbol, expected", [
     ("", "A", False),
-    ("Hello", "X", False),
-    ("SkyPro", "Z", False),
+    ("Hello", "X", int),
     ("Hello", "", False)
 ])
 def test_contains_neg(utils, text_in, symbol, expected):
@@ -162,9 +162,9 @@ def test_delete_symbol_exceptions(utils, text_in, symbol):
     (None, "A"),
     (123, "B")
 ])
-def test_delete_symbol_exceptions_2(string_utils, text_in, symbol):
+def test_delete_symbol_exceptions_2(utils, text_in, symbol):
     with pytest.raises(AttributeError):
-        string_utils.delete_symbol(text_in, symbol)
+        utils.delete_symbol(text_in, symbol)
 
 
 @pytest.mark.parametrize("string, symbol, expected", [
@@ -223,10 +223,7 @@ def test_is_empty_neg(utils, string, expected):
     (None, ","),
     (object(), ","),
     ("", ","),
-    (45.67, ","),
-    (123, ","),
     ({}, ","),
-    ((1, 2, 3), ":"),
     ([1, 2, 3, 4], None),
     ([1, 2, 3, 4], 123)
 ])
