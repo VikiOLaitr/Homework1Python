@@ -7,16 +7,13 @@ from selenium.webdriver.common.by import By
 driver = webdriver.Chrome(
     service=ChromeService(ChromeDriverManager().install()))
 driver.get("http://the-internet.herokuapp.com/add_remove_elements/")
-sleep(5)
+sleep(3)
 for i in range(5):
     button = driver.find_element(By.CSS_SELECTOR, "button")
     button.click()
 
-sleep(5)
-lists = driver.find_elements(By.CSS_SELECTOR, "button.added-manually")
-
-for element in lists:
-    name = element.get_attribute("outerHTML")
-    print(name)
+sleep(3)
+list = driver.find_elements(By.CSS_SELECTOR, "button.added-manually")
+print(len(list))
 
 driver.quit()
