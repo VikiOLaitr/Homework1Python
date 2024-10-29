@@ -19,12 +19,7 @@ class ShopPage:
         self.driver.find_element(By.ID, "password").send_keys("password")
         self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
 
-    def product(self, products):
-        products = [
-            "sauce-labs-backpack",
-            "sauce-labs-bolt-t-shirt",
-            "sauce-labs-onesie"
-        ]
+    def add_product(self, products):
         for product in products:
             product_locator = (By.ID, f"add-to-cart-{product}")
             self.waiter.until(
@@ -45,11 +40,10 @@ class ShopPage:
         self.driver.find_element(By.ID, "postal-code").send_keys("postalcode")
         self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
 
-    def summary(self, total_element):
-        total_element = self.waiter.until(
+    def get_summary(self):
+        self.waiter.until(
             EC.visibility_of_element_located((By.CLASS_NAME, "summary_total_label"))
-        )
-        assert total_element.text == "Total: $58.29"
+        ).text
 
     def finish(self):
         self.waiter.until(EC.element_to_be_clickable((By.ID, "finish"))).click()
