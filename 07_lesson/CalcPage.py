@@ -3,30 +3,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class CalcPage:
+class CalculatorPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.waiter = WebDriverWait(driver, 40)
 
-    def __init__(self, browser):
-        self.driver = browser
-        self.driver.implicitly_wait(4)
-        self.driver.maximize_window()
-
-    def get(self):
-        self.driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-
-    def slow_calculator(self, delay):
-        # Ввести значение 45 в поле с локатором #delay
-        delay_field = WebDriverWait(self.driver, 40).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "#delay"))
-            )
+    def set_delay(self, delay):
+        delay_field = self.waiter.until(EC.presence_of_element_located
+                                        ((By.CSS_SELECTOR, "#delay")))
         delay_field.clear()
         delay_field.send_keys(delay)
 
-    def buttons(self, button):
-        button_element = WebDriverWait(self.driver, 40).until(
-                EC.element_to_be_clickable((By.XPATH, f"//span[text()='{button}']"))
-            )
+    def click_button(self, button):
+        button_element = self.waiter.until(
+            EC.element_to_be_clickable((By.XPATH, f"//span[text()='{button}']")
+                                       ))
         button_element.click()
 
-    def result_locator(self):
+    def get_result(self):
         result_locator = (By.CSS_SELECTOR, "#result")
-        return WebDriverWait(self.driver, 40).until(EC.presence_of_element_located(result_locator)).text
+        return self.waiter.until(EC.presence_of_element_located(result_locator)
+                                 ).text
