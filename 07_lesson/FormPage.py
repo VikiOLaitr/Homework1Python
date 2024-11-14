@@ -21,7 +21,7 @@ class FormPage:
         self.field.send_keys(value)
 
     # Нажатие на кнопку Submit
-    def submit_button(self, submit_button):
+    def submit_button(self):
         submit_button = WebDriverWait(self.driver, 40).until(
             EC.element_to_be_clickable((By.XPATH, "//button[text()='Submit']"))
         )
@@ -29,9 +29,10 @@ class FormPage:
 
     # Проверка цвета фона поля "Zip code" после отправки формы
     def zip_code_element(self):
-        WebDriverWait(self.driver, 40).until(
+        result_color = WebDriverWait(self.driver, 40).until(
             EC.presence_of_element_located((By.ID, "zip-code"))
         ).value_of_css_property('background-color')
+        return result_color
 
     # Проверка цвета остальных полей
     def green_fields(self, field_id):

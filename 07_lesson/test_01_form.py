@@ -10,7 +10,6 @@ def test_form():
     formPage = FormPage(browser)
     formPage.get()
 
-    formPage.field()
     field = {
             "first-name": "Иван",
             "last-name": "Петров",
@@ -28,7 +27,6 @@ def test_form():
 
     formPage.submit_button()
 
-    formPage.zip_code_element()
     expected_zip_code_color = 'rgba(248, 215, 218, 1)'
     assert formPage.zip_code_element == expected_zip_code_color, (
         "Expected Zip code background color: {expected_zip_code_color},"
@@ -44,5 +42,4 @@ def test_form():
             "Expected background color for {field_id}: {expected_green_color},"
             "but got: {field_color}")
         
-    yield browser
     browser.quit()
