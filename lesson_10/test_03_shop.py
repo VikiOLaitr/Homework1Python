@@ -21,28 +21,29 @@ def driver() -> webdriver.Chrome:
 @allure.feature("Покупка товаров")
 def test_shopping_cart(driver):
     """Тест процесса покупок на сайте."""
+    with allure.step("Страница сайта"):
     driver.get("https://www.saucedemo.com/")
     shop_cart_page = ShopCartPage(driver)
 
-    # Вход в систему
+    with allure.step("Вход в систему"):
     shop_cart_page.login("standard_user", "secret_sauce")
 
-    # Список продуктов для добавления в корзину
+    with allure.step("Список продуктов для добавления в корзину"):
     products = ["sauce-labs-backpack", "sauce-labs-bolt-t-shirt",
                 "sauce-labs-onesie"]
 
-    # Добавление продуктов в корзину
+    with allure.step("Добавление продуктов в корзину"):
     shop_cart_page.add_products_to_cart(products)
     shop_cart_page.go_to_cart()
 
-    # Оформление заказа
+    with allure.step("Оформление заказа"):
     shop_cart_page.checkout("Viki", "Burlachenko", "764432")
 
-    # Получение общей суммы и проверка её правильности
+    with allure.step("Получение общей суммы и проверка её правильности"):
     total_text = shop_cart_page.get_total()
     assert total_text == "Total: $58.29", (
         f"Ожидалась сумма: Total: $58.29, но получено: {total_text}"
     )
 
-    # Завершение покупки
+    with allure.step("Завершение покупки"):
     shop_cart_page.complete_purchase()
